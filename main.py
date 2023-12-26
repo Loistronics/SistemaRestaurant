@@ -47,11 +47,36 @@ panelRecibo.pack(side=TOP)
 panelBotones = LabelFrame(panelDerecha,text= "Postres", bd=1, relief=FLAT, bg="azure")
 panelBotones.pack(side=TOP)
 
+lista_comidas = ["Perros Calientes", "Club House", "Hamburguesas", "Parrilla", "Shawarma","Arroz Chino", "Pizza1","Pizza2"]
+lista_bebinas = ["Malta","Jugo","Agua","Cerveza","Nestea","Ron","Sangria","Refresco"]
+lista_postres = ["Frutas","Flan","Pudin","MilHoja","Opera","Helado","Torta","Galletas"]
 
+variables_comida = []
+contador = 0
+for i in lista_comidas:
+    variables_comida.append('')
+    variables_comida[contador] = IntVar()
+    i = Checkbutton(panelComida, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_comida[contador])
+    i.grid(row=contador, column = 0, sticky=W)
+    contador += 1
 
+variables_bebidas = []
+contador = 0
+for i in lista_bebinas:
+    variables_bebidas.append('')
+    variables_bebidas[contador] = IntVar()
+    i = Checkbutton(panelBebida, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_bebidas[contador])
+    i.grid(row=contador, column = 0, sticky=W)
+    contador += 1
 
-
-
+variables_postres = []
+contador = 0
+for i in lista_postres:
+    variables_postres.append('')
+    variables_postres[contador] = IntVar()
+    i = Checkbutton(panelPostres, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_postres[contador])
+    i.grid(row=contador, column = 0, sticky=W)
+    contador += 1
 
 
 aplicacion.mainloop() #Evita que la pantalla se cierre
