@@ -52,30 +52,66 @@ lista_bebinas = ["Malta","Jugo","Agua","Cerveza","Nestea","Ron","Sangria","Refre
 lista_postres = ["Frutas","Flan","Pudin","MilHoja","Opera","Helado","Torta","Galletas"]
 
 variables_comida = []
+cuadros_comida = []
+texto_comida = []
 contador = 0
 for i in lista_comidas:
+    ################# Crear CkeckBox ####################
     variables_comida.append('')
     variables_comida[contador] = IntVar()
     i = Checkbutton(panelComida, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_comida[contador])
     i.grid(row=contador, column = 0, sticky=W)
+
+    ################# Crear Input ####################
+    cuadros_comida.append('')
+    texto_comida.append('')
+    texto_comida[contador] = StringVar()
+    texto_comida[contador].set('0')
+    cuadros_comida[contador] = Entry(panelComida, font=("Dosis",18,"bold"),bd=1,width=6,state=DISABLED, textvariable=texto_comida[contador])
+    cuadros_comida[contador].grid(row=contador, column=1)
+
     contador += 1
 
 variables_bebidas = []
+cuadros_bebidas = []
+texto_bebidas = []
 contador = 0
 for i in lista_bebinas:
+    ################# Crear CkeckBox ####################
     variables_bebidas.append('')
     variables_bebidas[contador] = IntVar()
     i = Checkbutton(panelBebida, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_bebidas[contador])
     i.grid(row=contador, column = 0, sticky=W)
+
+    ################# Crear Input ####################
+    cuadros_bebidas.append('')
+    texto_bebidas.append('')
+    texto_bebidas[contador] = StringVar()
+    texto_bebidas[contador].set('0')
+    cuadros_bebidas[contador] = Entry(panelBebida, font=("Dosis", 18, "bold"), bd=1, width=6, state=DISABLED, textvariable = texto_bebidas[contador])
+    cuadros_bebidas[contador].grid(row=contador, column=1)
+
     contador += 1
 
 variables_postres = []
+cuadros_postres = []
+texto_postres = []
 contador = 0
 for i in lista_postres:
+    ################# Crear CkeckBox ####################
     variables_postres.append('')
     variables_postres[contador] = IntVar()
     i = Checkbutton(panelPostres, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_postres[contador])
     i.grid(row=contador, column = 0, sticky=W)
+
+    ################# Crear Input ####################
+    cuadros_postres.append('')
+    texto_postres.append('')
+    texto_postres[contador] = StringVar()
+    texto_postres[contador].set('0')
+    cuadros_postres[contador] = Entry(panelPostres, font=("Dosis", 18, "bold"), bd=1, width=6, state=DISABLED, textvariable = texto_postres[contador])
+    cuadros_postres[contador].grid(row=contador, column=1)
+
     contador += 1
 
 
