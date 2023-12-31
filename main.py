@@ -1,5 +1,26 @@
 from tkinter import *
 
+operador = '' #Donde se almacena todo lo presionado en la calculadora
+
+def click_boton(numero_signo):
+    global operador
+    operador = operador + numero_signo
+    pantallaCalculadora.delete(0,END)
+    pantallaCalculadora.insert(END, operador)
+
+def borrar():
+    global operador
+    operador = ''
+    pantallaCalculadora.delete(0,END)
+
+def obtener_resultado():
+    global operador
+    resultado = str(eval(operador))
+    pantallaCalculadora.delete(0,END)
+    pantallaCalculadora.insert(END, resultado)
+    operador = ''
+
+
 aplicacion = Tk() #Se inicializa TKinter
 
 aplicacion.geometry("1200x630+0+0")  #Se cofigura tamano de la ventana
@@ -177,10 +198,13 @@ pantallaCalculadora.grid(row=0, column=0, columnspan=4)
 fila = 1
 columna = 0
 
-botonesCalculadora = ['7','8','9','+','4','5','6','-','1','2','3','x','CE','0','Borrar','/']
+botonesCalculadora = ['7','8','9','+','4','5','6','-','1','2','3','x','CE','0','=','/']
+botonesGuardados = []
 for i in botonesCalculadora:
     i = Button(panelCalculadora, text=i, font=("Dosis", 16, "bold"), fg='white', bg='azure4', bd=1, width=7)
     i.grid(row=fila, column=columna)
+
+    botonesGuardados.append(i)
 
 
     if columna == 3:
@@ -190,6 +214,25 @@ for i in botonesCalculadora:
 
     if columna == 4:
         columna = 0
+
+
+botonesGuardados[0].config(command=lambda : click_boton('7'))
+botonesGuardados[1].config(command=lambda : click_boton('8'))
+botonesGuardados[2].config(command=lambda : click_boton('9'))
+botonesGuardados[3].config(command=lambda : click_boton('+'))
+botonesGuardados[4].config(command=lambda : click_boton('4'))
+botonesGuardados[5].config(command=lambda : click_boton('5'))
+botonesGuardados[6].config(command=lambda : click_boton('6'))
+botonesGuardados[7].config(command=lambda : click_boton('-'))
+botonesGuardados[8].config(command=lambda : click_boton('1'))
+botonesGuardados[9].config(command=lambda : click_boton('2'))
+botonesGuardados[10].config(command=lambda : click_boton('3'))
+botonesGuardados[11].config(command=lambda : click_boton('*'))
+botonesGuardados[12].config(command=lambda : borrar())
+botonesGuardados[13].config(command=lambda : click_boton('0'))
+botonesGuardados[14].config(command=lambda : obtener_resultado())
+botonesGuardados[15].config(command=lambda : click_boton('/'))
+
 
 
 
