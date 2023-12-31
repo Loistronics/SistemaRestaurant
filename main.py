@@ -2,7 +2,7 @@ from tkinter import *
 
 aplicacion = Tk() #Se inicializa TKinter
 
-aplicacion.geometry("1020x630+0+0")  #Se cofigura tamano de la ventana
+aplicacion.geometry("1200x630+0+0")  #Se cofigura tamano de la ventana
 
 aplicacion.resizable(0,0) #Ni en el eje x ni en el eje y se podra expandir la ventana
 
@@ -21,7 +21,7 @@ etiqueta_titulo.grid(row=0,column=0) #Desde donde comenzara el Frame
 panelIzquiero = Frame(aplicacion, bd=1, relief=FLAT)
 panelIzquiero.pack(side=LEFT)
 
-panelCosto = Frame(panelIzquiero, bd=1, relief=FLAT)
+panelCosto = Frame(panelIzquiero, bd=1, relief=FLAT, bg='azure4', padx = 100)
 panelCosto.pack(side=BOTTOM)
 
 panelComida = LabelFrame(panelIzquiero,text= "Comida",font=("Dosis",19,"bold"), bd=1, relief=FLAT)
@@ -38,13 +38,13 @@ panelPostres.pack(side=LEFT)
 panelDerecha = Frame(aplicacion, bd=1, relief=FLAT)
 panelDerecha.pack(side=RIGHT)
 
-panelCalculadora = LabelFrame(panelDerecha,text= "Postres", bd=1, relief=FLAT, bg="azure")
+panelCalculadora = LabelFrame(panelDerecha,text= "Calculadora", bd=1, relief=FLAT, bg="azure")
 panelCalculadora.pack(side=TOP)
 
-panelRecibo = LabelFrame(panelDerecha,text= "Postres", bd=1, relief=FLAT, bg="azure")
+panelRecibo = LabelFrame(panelDerecha,text= "Recibo", bd=1, relief=FLAT, bg="azure")
 panelRecibo.pack(side=TOP)
 
-panelBotones = LabelFrame(panelDerecha,text= "Postres", bd=1, relief=FLAT, bg="azure")
+panelBotones = LabelFrame(panelDerecha, bd=1, relief=FLAT, bg="azure")
 panelBotones.pack(side=TOP)
 
 lista_comidas = ["Perros Calientes", "Club House", "Hamburguesas", "Parrilla", "Shawarma","Arroz Chino", "Pizza1","Pizza2"]
@@ -113,6 +113,84 @@ for i in lista_postres:
     cuadros_postres[contador].grid(row=contador, column=1)
 
     contador += 1
+
+##############################################################################################
+
+#Variables
+variableCostoComida = StringVar()
+variableCostoBebida = StringVar()
+variableCostoPostre = StringVar()
+
+variableSubTotal = StringVar()
+variableImpuesto = StringVar()
+variableTotal = StringVar()
+
+#Etiquetas de Costo y campos de Entrada
+etiquetaCostoComida = Label(panelCosto, text = 'Costo Comida' , font=('Dosis',12,'bold'),bg='azure4',fg='white')
+etiquetaCostoComida.grid(row=0, column=0)
+textoCostoComida = Entry(panelCosto, font=("Dosis", 12, "bold"), bd=1, width=10, state='readonly',textvariable=variableCostoComida)
+textoCostoComida.grid(row=0 ,column = 1, padx = 41)
+
+etiquetaCostoBebida = Label(panelCosto, text = 'Costo Bebida',  font=('Dosis',12,'bold'),bg='azure4',fg='white')
+etiquetaCostoBebida.grid(row=1, column=0)
+textoCostoBebida = Entry(panelCosto, font=("Dosis", 12, "bold"), bd=1, width=10, state='readonly',textvariable=variableCostoBebida)
+textoCostoBebida.grid(row=1 ,column = 1, padx = 41)
+
+etiquetaCostoPostre = Label(panelCosto, text = 'Costo Postre',  font=('Dosis',12,'bold'),bg='azure4',fg='white')
+etiquetaCostoPostre.grid(row=2, column=0)
+textoCostoPostre = Entry(panelCosto, font=("Dosis", 12, "bold"), bd=1, width=10, state='readonly',textvariable=variableCostoPostre)
+textoCostoPostre.grid(row=2 ,column = 1, padx = 41)
+
+etiquetaSubTotal = Label(panelCosto, text = 'SubTotal' , font=('Dosis',12,'bold'),bg='azure4',fg='white')
+etiquetaSubTotal.grid(row=0, column=3)
+textoSubTotal = Entry(panelCosto, font=("Dosis", 12, "bold"), bd=1, width=10, state='readonly',textvariable=variableSubTotal)
+textoSubTotal.grid(row=0 ,column = 4, padx = 41)
+
+etiquetaImpuesto = Label(panelCosto, text = 'Impuesto',  font=('Dosis',12,'bold'),bg='azure4',fg='white')
+etiquetaImpuesto.grid(row=1, column=3)
+textoImpuesto = Entry(panelCosto, font=("Dosis", 12, "bold"), bd=1, width=10, state='readonly',textvariable=variableImpuesto)
+textoImpuesto.grid(row=1 ,column = 4, padx = 41)
+
+etiquetaTotal = Label(panelCosto, text = 'Total',  font=('Dosis',12,'bold'),bg='azure4',fg='white')
+etiquetaTotal.grid(row=2, column=3)
+textoTotal = Entry(panelCosto, font=("Dosis", 12, "bold"), bd=1, width=10, state='readonly',textvariable=variableTotal)
+textoTotal.grid(row=2 ,column = 4, padx = 41)
+
+#Botones
+botones = ['Total','Recibo','Guardar','Resetear']
+columnas = 0
+for i in botones:
+    i = Button(panelBotones,text= i, font=("Dosis", 14, "bold"), fg='white',bg='azure4',bd=1,width=7)
+    i.grid(row=0, column=columnas)
+    columnas+=1
+
+#Area de Ricibo
+textoRecibo = Text(panelRecibo, font=("Dosis", 12, "bold"), bd=1, width=42, height=10)
+textoRecibo.grid(row=0, column=0)
+
+#############################################
+#                Calculadora
+#############################################
+pantallaCalculadora = Entry(panelCalculadora, font=("Dosis", 16, "bold"), width=32, bd=1)
+pantallaCalculadora.grid(row=0, column=0, columnspan=4)
+
+fila = 1
+columna = 0
+
+botonesCalculadora = ['7','8','9','+','4','5','6','-','1','2','3','x','CE','0','Borrar','/']
+for i in botonesCalculadora:
+    i = Button(panelCalculadora, text=i, font=("Dosis", 16, "bold"), fg='white', bg='azure4', bd=1, width=7)
+    i.grid(row=fila, column=columna)
+
+
+    if columna == 3:
+        fila += 1
+
+    columna += 1
+
+    if columna == 4:
+        columna = 0
+
 
 
 aplicacion.mainloop() #Evita que la pantalla se cierre
