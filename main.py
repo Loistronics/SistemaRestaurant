@@ -20,6 +20,40 @@ def obtener_resultado():
     pantallaCalculadora.insert(END, resultado)
     operador = ''
 
+def revisarCheck():
+    x = 0
+    for i in cuadros_comida:
+        if variables_comida[x].get() == 1:
+            cuadros_comida[x].config(state=NORMAL)
+            if cuadros_comida[x].get() == '0':
+                cuadros_comida[x].delete(0,END)
+            cuadros_comida[x].focus()
+        else:
+            cuadros_comida[x].config(state=DISABLED)
+            texto_comida[x].set('0')
+        x+=1
+    x = 0
+    for i in cuadros_bebidas:
+        if variables_bebidas[x].get() == 1:
+            cuadros_bebidas[x].config(state=NORMAL)
+            if cuadros_bebidas[x].get() == '0':
+                cuadros_bebidas[x].delete(0, END)
+            cuadros_bebidas[x].focus()
+        else:
+            cuadros_bebidas[x].config(state=DISABLED)
+            texto_bebidas[x].set('0')
+        x += 1
+    x = 0
+    for i in cuadros_postres:
+        if variables_postres[x].get() == 1:
+            cuadros_postres[x].config(state=NORMAL)
+            if cuadros_postres[x].get() == '0':
+                cuadros_postres[x].delete(0, END)
+            cuadros_postres[x].focus()
+        else:
+            cuadros_postres[x].config(state=DISABLED)
+            texto_postres[x].set('0')
+        x += 1
 
 aplicacion = Tk() #Se inicializa TKinter
 
@@ -77,10 +111,10 @@ cuadros_comida = []
 texto_comida = []
 contador = 0
 for i in lista_comidas:
-    ################# Crear CkeckBox ####################
+    ################# Crear CkeckButton ####################
     variables_comida.append('')
     variables_comida[contador] = IntVar()
-    i = Checkbutton(panelComida, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_comida[contador])
+    i = Checkbutton(panelComida, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_comida[contador], command=revisarCheck)
     i.grid(row=contador, column = 0, sticky=W)
 
     ################# Crear Input ####################
@@ -98,10 +132,10 @@ cuadros_bebidas = []
 texto_bebidas = []
 contador = 0
 for i in lista_bebinas:
-    ################# Crear CkeckBox ####################
+    ################# Crear CkeckButton ####################
     variables_bebidas.append('')
     variables_bebidas[contador] = IntVar()
-    i = Checkbutton(panelBebida, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_bebidas[contador])
+    i = Checkbutton(panelBebida, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_bebidas[contador], command=revisarCheck)
     i.grid(row=contador, column = 0, sticky=W)
 
     ################# Crear Input ####################
@@ -119,10 +153,10 @@ cuadros_postres = []
 texto_postres = []
 contador = 0
 for i in lista_postres:
-    ################# Crear CkeckBox ####################
+    ################# Crear CkeckButton ####################
     variables_postres.append('')
     variables_postres[contador] = IntVar()
-    i = Checkbutton(panelPostres, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_postres[contador])
+    i = Checkbutton(panelPostres, text=i.title(), font=("Dosis",19,"bold"),onvalue=1, offvalue=0, variable = variables_postres[contador], command=revisarCheck)
     i.grid(row=contador, column = 0, sticky=W)
 
     ################# Crear Input ####################
