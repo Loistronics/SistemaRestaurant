@@ -1,6 +1,13 @@
 from tkinter import *
+import random
+import datetime
+from tkinter import filedialog,messagebox
 
 operador = '' #Donde se almacena todo lo presionado en la calculadora
+
+precios_comida = [1.32, 1.65, 2.31, 3.22, 1.22, 1.99, 2.05, 2.65]
+precios_bebida = [0.25, 0.99, 1.21, 1.54, 1.08, 1.10, 2.00, 1.58]
+precios_postres = [1.54, 1.68, 1.32, 1.97, 2.55, 2.14, 1.94, 1.74]
 
 def click_boton(numero_signo):
     global operador
@@ -54,6 +61,114 @@ def revisarCheck():
             cuadros_postres[x].config(state=DISABLED)
             texto_postres[x].set('0')
         x += 1
+
+def total():
+    subTotalComida = 0
+    p = 0
+    for i in texto_comida:
+        subTotalComida = subTotalComida + (float(i.get()) * precios_comida[p])
+        p += 1
+    print(subTotalComida)
+
+    subTotalBebida = 0
+    p = 0
+    for i in texto_bebidas:
+        subTotalBebida = subTotalBebida+ (float(i.get()) * precios_bebida[p])
+        p += 1
+    print(subTotalBebida)
+
+    subTotalPostre = 0
+    p = 0
+    for i in texto_postres:
+        subTotalPostre = subTotalPostre + (float(i.get()) * precios_postres[p])
+        p += 1
+
+    subTotal = subTotalComida + subTotalBebida + subTotalPostre
+    impuestos = subTotal * 0.15
+    total = subTotal + impuestos
+
+    variableCostoComida.set(f"${round(subTotalComida)}")
+    variableCostoBebida.set(f"${round(subTotalBebida)}")
+    variableCostoPostre.set(f"${round(subTotalPostre)}")
+
+    variableSubTotal.set(f"${round(subTotal)}")
+    variableImpuesto.set(f"${round(impuestos)}")
+    variableTotal.set(f"${round(total)}")
+
+def factura():
+    textoRecibo.delete(1.0, END)
+    numeroFactura = f"N# {random.randint(10000, 100000)}"
+    fecha = datetime.datetime.now()
+    fechaFactura = f"{fecha.day}/{fecha.month}/{fecha.year} - {fecha.hour}:{fecha.minute}"
+    textoRecibo.insert(END, f"Datos: \t{numeroFactura}\t\t{fechaFactura}\n")
+    textoRecibo.insert(END, f"*" * 63 + "\n")
+    textoRecibo.insert(END, "Articulo\t\tCantidad\t\tCosto\n")
+    textoRecibo.insert(END, "-" * 75 + "\n")
+
+    x = 0
+    for i in texto_comida:
+        if i.get() != '0':
+            textoRecibo.insert(END, f"{lista_comidas[x]}\t\t{i.get()}\t\t${int(i.get()) * precios_comida[x]}\n")
+        x+=1
+    x = 0
+    for i in texto_bebidas:
+        if i.get() != '0':
+            textoRecibo.insert(END, f"{lista_bebinas[x]}\t\t{i.get()}\t\t${int(i.get()) * precios_bebida[x]}\n")
+        x += 1
+    x = 0
+    for i in texto_postres:
+        if i.get() != '0':
+            textoRecibo.insert(END, f"{lista_postres[x]}\t\t{i.get()}\t\t${int(i.get()) * precios_postres[x]}\n")
+        x += 1
+
+    textoRecibo.insert(END, "-" * 75 + "\n")
+    textoRecibo.insert(END,f"Costo Comida:\t\t\t{variableCostoComida.get()}\n")
+    textoRecibo.insert(END, f"Costo Bebida:\t\t\t{variableCostoBebida.get()}\n")
+    textoRecibo.insert(END, f"Costo Postre:\t\t\t{variableCostoPostre.get()}\n")
+    textoRecibo.insert(END, "-" * 75 + "\n")
+    textoRecibo.insert(END, f"SubTotal:\t\t\t{variableSubTotal.get()}\n")
+    textoRecibo.insert(END, f"Impuesto:\t\t\t{variableImpuesto.get()}\n")
+    textoRecibo.insert(END, f"Total:\t\t\t{variableTotal.get()}\n")
+    textoRecibo.insert(END, "-" * 75 + "\n")
+
+def guardarFactura():
+    infoRecibo = textoRecibo.get(1.0, END)
+    archivo = filedialog.asksaveasfile(mode='w', defaultextension='.txt')
+    archivo.write(infoRecibo)
+    archivo.close()
+    messagebox.showinfo("Informacion","La factura fue guardada con Exito")
+
+def resetearPantalla():
+    textoRecibo.delete(0.1,END)
+    ### Texto de los Inputs a 0 ########
+    for i in texto_comida:
+        i.set('0')
+    for i in texto_bebidas:
+        i.set('0')
+    for i in texto_postres:
+        i.set('0')
+    ### Input solo de lectura ############
+    for i in cuadros_comida:
+        i.config(state=DISABLED)
+    for i in cuadros_bebidas:
+        i.config(state=DISABLED)
+    for i in cuadros_postres:
+        i.config(state=DISABLED)
+    ### Contenido de los checkBox ##########
+    for i in variables_comida:
+        i.set(0)
+    for i in variables_bebidas:
+        i.set(0)
+    for i in variables_postres:
+        i.set(0)
+
+    variableCostoComida.set('')
+    variableCostoBebida.set('')
+    variableCostoPostre.set('')
+    variableSubTotal.set('')
+    variableTotal.set('')
+    variableImpuesto.set('')
+
 
 aplicacion = Tk() #Se inicializa TKinter
 
@@ -212,12 +327,19 @@ textoTotal = Entry(panelCosto, font=("Dosis", 12, "bold"), bd=1, width=10, state
 textoTotal.grid(row=2 ,column = 4, padx = 41)
 
 #Botones
-botones = ['Total','Recibo','Guardar','Resetear']
+botones = ['Total','Factura','Guardar','Resetear']
+botonesCreados = []
 columnas = 0
 for i in botones:
     i = Button(panelBotones,text= i, font=("Dosis", 14, "bold"), fg='white',bg='azure4',bd=1,width=7)
+    botonesCreados.append(i)
     i.grid(row=0, column=columnas)
     columnas+=1
+
+botonesCreados[0].config(command=total)
+botonesCreados[1].config(command=factura)
+botonesCreados[2].config(command=guardarFactura)
+botonesCreados[3].config(command=resetearPantalla)
 
 #Area de Ricibo
 textoRecibo = Text(panelRecibo, font=("Dosis", 12, "bold"), bd=1, width=42, height=10)
